@@ -9,7 +9,7 @@
   ],
   "homepage": "https://deepai-sd.github.io/ebs",
   "type": "library",
-  "license": "The MIT License",
+  "license": "MIT",
   "authors": [
     {
       "name": "Mohammed Ali",
