@@ -85,16 +85,22 @@ class Cashaman
                 else
                     return array('status' => 'error', 'message' => $data['message']);
             } else {
-                return array('status' => 'success','transaction' =>  array(
-                    'token' => $this->ACCOUNT_INFO['token'],
-                    'userid' => $this->ACCOUNT_INFO['userid'],
-                    'uuid' => $uuid,
-                    'panfrom' => $from,
-                    'panto' => $to,
-                    'expdate' => $exp,
-                    'amount' => $amount,
-                    'app_version' => $this->APP_VERSION
-                ));
+                return array(
+                    'status' => 'success',
+                    'transaction' =>  array(
+                        'params' =>  array(
+                            'token' => $this->ACCOUNT_INFO['token'],
+                            'userid' => $this->ACCOUNT_INFO['userid'],
+                            'uuid' => $uuid,
+                            'panfrom' => $from,
+                            'panto' => $to,
+                            'expdate' => $exp,
+                            'amount' => $amount,
+                            'app_version' => $this->APP_VERSION
+                        ),
+                        'response' => json_decode($data['message'],true)
+                    )
+                );
             }
         } else {
             return array('status' => 'error', 'message' => 'Internal server error');
