@@ -40,7 +40,6 @@ class Cashaman
     );
 
 
-
     /**
      * Cashaman constructor.
      * @param $username
@@ -87,8 +86,8 @@ class Cashaman
             } else {
                 return array(
                     'status' => 'success',
-                    'transaction' =>  array(
-                        'params' =>  array(
+                    'transaction' => array(
+                        'params' => array(
                             'token' => $this->ACCOUNT_INFO['token'],
                             'userid' => $this->ACCOUNT_INFO['userid'],
                             'uuid' => $uuid,
@@ -98,8 +97,41 @@ class Cashaman
                             'amount' => $amount,
                             'app_version' => $this->APP_VERSION
                         ),
-                        'response' => json_decode($data['message'],true)
+                        'response' => json_decode($data['message'], true)
                     )
+                );
+            }
+        } else {
+            return array('status' => 'error', 'message' => 'Internal server error');
+        }
+    }
+
+    /**
+     * @param $uuid
+     * @return array
+     */
+    public function status($uuid)
+    {
+
+        $_uuid = $this->uuid();
+        $response = $this->client('moneyTransfer', array(
+            'token' => $this->ACCOUNT_INFO['token'],
+            'userid' => $this->ACCOUNT_INFO['userid'],
+            'uuid' => $_uuid,
+            'originalUUID ' => $uuid,
+            'app_version' => $this->APP_VERSION
+        ));
+        if ($response) {
+            $data = $response;
+            if ($data['statuscode'] != 0) {
+                $msgReturn = json_decode($data['message'], true);
+                if (isset($msgReturn['output_responsemessage']))
+                    return array('status' => 'error', 'message' => $msgReturn['output_responsemessage']);
+                else
+                    return array('status' => 'error', 'message' => $data['message']);
+            } else {
+                return array(
+                    'status' => 'success'
                 );
             }
         } else {
@@ -176,7 +208,7 @@ class Cashaman
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,FALSE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
         $response = curl_exec($ch);
         curl_close($ch);
         return json_decode($response, true);
