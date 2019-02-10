@@ -33,5 +33,4 @@ As part of our responsibility towards our community, and in support of e-governm
    
 
 ## Sponsors 
-1. [Zoul Vision Infrastructure Co. Ltd](https://zoulvision.com) (**Golden**):<br>
-   ![Zoul Vision Infrastructure Co. Ltd](https://zoulvision.com/images/zoulvision.png)
+No sponsors currently, If you'd like to be suponsor contact me at xc0d3rz@icloud.com :)
